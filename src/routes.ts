@@ -1,23 +1,47 @@
-import { UserController } from "./controller/UserController"
+import express, { Router, Request, Response, NextFunction } from "express";
+import { TrackController } from "./controller/TrackController";
 
-export const Routes = [{
+const router = express.Router();
+
+// Define your routes using the router object
+
+router.post(
+  "/create-track",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { isrc } = req.body;
+    if (!isrc) {
+      return res.status(400).json({ error: "ISRC parameter is required" });
+    }
+    try {
+      const trackController = new TrackController();
+      const newTrack = await trackController.saveTrack(isrc);
+      res.status(201).json(newTrack);
+    } catch (error) {
+      res.status(403).json(error.message);
+    }
+  }
+);
+
+export default router;
+/*
+export const Routes = [
+  {
     method: "get",
-    route: "/users",
-    controller: UserController,
-    action: "all"
-}, {
-    method: "get",
+    route: "/tracks",
+    controller: TrackController,
+    action: "getAllTracks",
+  },
+  {
+    method: "getTrackByIsrc",
     route: "/users/:id",
-    controller: UserController,
-    action: "one"
-}, {
+    controller: TrackController,
+    action: "one",
+  },
+  {
     method: "post",
-    route: "/users",
-    controller: UserController,
-    action: "save"
-}, {
-    method: "delete",
-    route: "/users/:id",
-    controller: UserController,
-    action: "remove"
-}]
+    route: "/track",
+    controller: TrackController,
+    action: "saveTrack",
+  },
+];
+*/
