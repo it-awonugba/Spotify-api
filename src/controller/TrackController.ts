@@ -32,7 +32,37 @@ export class TrackController {
       await AppDataSource.manager.save(newArtist);
       return await AppDataSource.manager.save(newTrack);
     } catch (error) {
-      return { Message: `Error creating this track: ${isrc} : ${error}` };
+      return { message: `Error creating this track: ${isrc} : ${error}` };
     }
+  }
+
+  async findTrackByIsrc(inputIsrc: string) {
+    return await this.trackRepository
+      .findOne({ where: { isrc: inputIsrc }, relations: ["artist"] })
+      .then((track) => {
+        if (track) {
+          return track;
+        } else {
+          return `Track with ISRC ${inputIsrc} not found`;
+        }
+      })
+      .catch((error) => {
+        return error.message;
+      });
+  }
+
+  async findTrackByArtist(artistName: string) {
+    return await this.artistRepository
+      .findOne({ where: { name: artistName }, relations: ["tracks"] })
+      .then((artist) => {
+        if (artist) {
+          return artist;
+        } else {
+          return `Track with ISRC ${artistName} not found`;
+        }
+      })
+      .catch((error) => {
+        return error.message;
+      });
   }
 }
