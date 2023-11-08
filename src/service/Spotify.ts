@@ -64,7 +64,7 @@ export class Spotify {
         : items[0];
 
     return {
-      isrc: trackWithHighestPopularity.external_ids.isrc,
+      isrc: trackWithHighestPopularity.external_ids?.isrc || isrc,
       spotifyImageUri: trackWithHighestPopularity.album.images[0]?.url,
       title: trackWithHighestPopularity.name,
       artist: trackWithHighestPopularity.artists.map((artist) => artist.name),
