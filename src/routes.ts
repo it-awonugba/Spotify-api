@@ -10,7 +10,9 @@ router.get(
 
     try {
       const trackController = new TrackController();
-      const responseData = await trackController.findTrackByIsrc(isrcInput);
+      const responseData = await trackController.findTrackByIsrc(
+        isrcInput.trim()
+      );
       if (responseData) {
         res.status(200).json(responseData);
       } else {
@@ -28,7 +30,9 @@ router.get(
     const { artistName } = req.params;
     try {
       const trackController = new TrackController();
-      const responseData = await trackController.findTrackByArtist(artistName);
+      const responseData = await trackController.findTrackByArtist(
+        artistName.trim()
+      );
       if (responseData) {
         res.status(200).json(responseData);
       } else {
