@@ -53,7 +53,7 @@ export class TrackController {
 
   async findTrackByArtist(artistName: string) {
     return await this.artistRepository
-      .findOne({ where: { name: artistName }, relations: ["tracks"] })
+      .find({ where: { name: artistName }, relations: ["tracks"] })
       .then((artist) => {
         if (artist) {
           return artist;
