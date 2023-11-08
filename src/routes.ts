@@ -3,7 +3,6 @@ import { TrackController } from "./controller/TrackController";
 
 const router: Router = express.Router();
 
-// Define your routes using the router object
 router.get(
   "/tracks/:isrc",
   async (req: Request, res: Response, next: NextFunction) => {
