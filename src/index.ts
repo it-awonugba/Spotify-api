@@ -3,7 +3,7 @@ import swaggerUi from "swagger-ui-express";
 import * as dotenv from "dotenv";
 import { AppDataSource } from "./data-source";
 import routes from "./routes";
-import swaggerSpec from "./swagger";
+import * as swaggerFile from "../swagger_output.json";
 
 AppDataSource.initialize()
   .then(async () => {
@@ -11,8 +11,7 @@ AppDataSource.initialize()
     dotenv.config();
     app.use(express.json());
     app.use(routes);
-
-    app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
     const PORT: number = parseInt(process.env.PORT) || 4000;
 
